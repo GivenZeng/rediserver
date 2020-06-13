@@ -70,13 +70,14 @@ func (c *conn) ReadCommand() (cmd *Command, err error) {
 	return nil, errors.New("none command")
 }
 
-func (c *conn) Write(content []byte) error {
-	for len(content) > 0 {
-		n, err := c.c.Write(content)
+func (c *conn) Write(resp []byte) error {
+	resp = []byte("+" + string(resp) + "\r\n")
+	for len(resp) > 0 {
+		n, err := c.c.Write(resp)
 		if err != nil {
 			return err
 		}
-		content = content[n:]
+		resp = resp[n:]
 	}
 	return nil
 }

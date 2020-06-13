@@ -7,10 +7,6 @@ import (
 	"sync"
 )
 
-var (
-	RespOK = []byte("+OK\r\n")
-)
-
 type Conf struct {
 	Port int `yaml:"port"`
 }
@@ -71,7 +67,7 @@ func ListenAndServe(port int, handler Handler) error {
 		conn := s.AddConn(c)
 		go func() {
 			defer s.RemoveConn(conn.id)
-			if err = conn.Write(RespOK); err != nil {
+			if err = conn.Write([]byte("OK")); err != nil {
 				fmt.Printf("err = %s\n", err.Error())
 				return
 			}
