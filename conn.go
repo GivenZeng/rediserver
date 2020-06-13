@@ -25,7 +25,7 @@ const (
 
 type Command struct {
 	Type CommandType
-	Args [][]byte
+	Args [][]byte // 参数，不包含命令
 }
 
 func (c *Command) String() string {
@@ -54,6 +54,7 @@ func (c *conn) Close() {
 	c.c.Close()
 }
 
+// ReadCommand 读取客户端传送过来的命令
 func (c *conn) ReadCommand() (cmd *Command, err error) {
 	buf := make([]byte, 1024)
 	for i := 0; i < 1000000; i++ {
