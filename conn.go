@@ -13,7 +13,7 @@ import (
 type CommandType string
 
 const (
-	CommandTypeSet CommandType = "Set"
+	CommandTypeSet CommandType = "set"
 	CommandTypeGet CommandType = "get"
 
 	CommandTypeHset    CommandType = "hset"
@@ -137,7 +137,7 @@ func Rsfp2Cmd(buf []byte) (cmd *Command, err error) {
 		buf = buf[argLen+2:]
 	}
 	cmd = &Command{
-		Type: CommandType(string(args[0])),
+		Type: CommandType(strings.ToLower(string(args[0]))),
 		Args: args[1:],
 	}
 	return cmd, nil
